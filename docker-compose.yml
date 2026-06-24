@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    image: 172.24.11.237:6000/gvenzl/oracle-free:23
+    container_name: oracledb-free
+    environment:
+      # Contraseña para el usuario SYS (administrador)
+      ORACLE_PASSWORD: manager      
+      # Usuario y contraseña para un usuario de aplicación (opcional)
+      # APP_USER: PC_SOLICITUDE_PROD
+      # APP_USER_PASSWORD: PC_SOLICITUDE
+      
+      # Nombre de la base de datos (opcional, por defecto: FREEPDB1)
+      ORACLE_DATABASE: orabd
+    ports:
+      - "1521:1521"  # Puerto para conexiones de base de datos
+    volumes:
+      # Persistencia de datos
+      - oracle_datadev:/opt/oracle/oradata
+      - ./init_params.sql:/docker-entrypoint-initdb.d/init_params.sql # inicializar con estos parametros
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 4G
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      start_period: 30s
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+
+
+volumes:
+  oracle_datadev:
