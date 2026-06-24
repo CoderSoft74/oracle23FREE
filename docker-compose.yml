@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   oracle-db:
-    image: 172.24.11.237:6000/gvenzl/oracle-free:23
+    image: gvenzl/oracle-free:23
     container_name: oracledb-free
     environment:
       # Contraseña para el usuario SYS (administrador)
       ORACLE_PASSWORD: manager      
       # Usuario y contraseña para un usuario de aplicación (opcional)
-      # APP_USER: PC_SOLICITUDE_PROD
-      # APP_USER_PASSWORD: PC_SOLICITUDE
+      # APP_USER: usuario
+      # APP_USER_PASSWORD: usuario
       
       # Nombre de la base de datos (opcional, por defecto: FREEPDB1)
       ORACLE_DATABASE: orabd
